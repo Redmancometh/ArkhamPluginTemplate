@@ -1,0 +1,897 @@
+{
+	//  For these use %n for name, %dn for display-name, and %cv for current value
+	//  For the bio please use %cv on it's own line, as it will take up multiple lines
+	//  Using /n will insert a "newline" which will act as a spacer. 
+	//  Spacers are automatically added after each stat name's output, and shouldn't be required.
+
+	// %n 	= name 		      %gender 	= player gender       %status 	       = private/public setting status          %openrequests 	= amount of open friend requests
+	// %dn 	= display-name 	      %country 	= player country      %bio 	       = player bio  			        %timeonline  	= time a player is online for
+	// %s 	= servername 	      %rank 	= player rank 	      %ignoredamount   = amount of players ignored 		%friendstime 	= amount of time players are friends for
+	// %o 	= online status       %joindate = player joindate     %ignoredtime     = time a player has been ignored for
+	// %fs 	= friend status       %discord 	= player discord      %friendsamount   = amount of friends player has
+	//
+
+	"head": {
+		"icon-display-name": "&a&l%dn (%n)",
+		"top-line": "&a&l%dn (%n)",
+		"player-status-header": "&aPlayer Status: &7",
+		"member-since-header": "&aMember Since: &7",
+		"friend-status-header": "&2Friend Status: &7",
+		"allegiance-header": "&aAllegiance:", 
+		"bio-header": "&aPlayer Bio",
+		"past-ign-header": "&aPast In-game Names",
+		"body-text-color": "&7",
+		"status-line": "&aPlayer Status: &7%o (%s)",
+		"online-text": "&7Online",
+		"offline-text": "&7Offline",
+		"friends-status": "&aFriends: &7%fs",
+		"friend-status-not": "Not Friends",
+		"friend-status-favorite": "Favorite Friend",
+		"friends-status-friends": "Friends",
+		"allegiance-text-hero": "&bHero",
+		"allegiance-text-villain": "&cVillain",
+		"additional-lines": [
+			"&c[Stuff]"
+		]
+	},
+	"main-menu": {
+		"title": "main-menu",
+		"placeholder-one": 15,
+		"placeholder-two": 7,
+		"your-profile": {
+			"material": "skull", // Must be the head of yourself
+			"data-value": 3,
+			"display-name": "&e&lYour Profile",
+			"lore": [
+				"&7Click to visit your profile!"
+			]
+		},
+		"your-statistics": {
+			"material": "book",
+			"data-value": 0,
+			"display-name": "&b&lYour Statistics",
+			"lore": [
+				"&7Click to open your statistics!"
+			]
+		},
+		"your-preferences": {
+			"material": "watch",
+			"data-value": 0,
+			"display-name": "&c&lYour Preferences",
+			"lore": [
+				"&7Click to view your preferences!"
+			]
+		},
+		"your-friends": {
+			"material": "name_tag",
+			"data-value": 0,
+			"display-name": "&e&lYour Friends",
+			"lore": [
+				"&7Click to go to your friends list!"
+			]
+		},
+		"player-search": {
+			"material": "compass",
+			"data-value": 0,
+			"display-name": "&c&lPlayer Search",
+			"lore": [
+				"&7Click to search for a player!"
+			]
+		}
+	},
+	"profiles-own": { // I've split this into two menu's: "profiles-own" and "profiles-others"
+		"title": "&8Arkham â— Your Profile",
+		"placeholder-one": 15,
+		"placeholder-two": 7,
+		"player-head": {
+			"material": "skull", // Must be the head of yourself
+			"data-value": 3,
+			"display-name": "&a&l%dn (%n)", // Even necessary? Line 14 already has this
+			"lore": [
+				"&c[Left click to edit]"
+			]
+		},
+		"edit-gender": {
+			"material": "book",
+			"data-value": 0,
+			"display-name": "&e&lGender",
+			"lore": [
+				"&7%gender/n/n&a[Left click to edit]/n&c[Right click to remove]" // %gender must have a placeholder
+			]
+		},
+		"edit-country": {
+			"material": "book",
+			"data-value": 0,
+			"display-name": "&e&lCountry",
+			"lore": [
+				"&7%country/n/n&a[Left click to edit]/n&c[Right click to remove]"  // %country must have a placeholder
+			]
+		},
+		"server-rank": {
+			"material": "book",
+			"data-value": 0,
+			"display-name": "&e&lServer Rank",
+			"lore": [
+				"&7%rank/n/n&a[Left click to add]/n&c[Right click to remove]"  // %rank must have a placeholder
+			]
+		},
+		"join-date": {
+			"material": "book",
+			"data-value": 0,
+			"display-name": "&e&lJoin Date",
+			"lore": [
+				"&7%joindate/n/n&a[Left click to add]/n&c[Right click to remove]"  // %joindate must have a placeholder
+			]
+		},
+		"edit-discord": {
+			"material": "book",
+			"data-value": 0,
+			"display-name": "&e&lDiscord Username",
+			"lore": [
+				"&7%discord/n/n&a[Left click to edit]/n&c[Right click to remove]"  // %discord must have a placeholder
+			]
+		},
+		"statistics-icon": {
+			"material": "watch",
+			"data-value": 0,
+			"display-name": "&e&lStatistics &7(%status)", // %status must have a placeholder
+			"lore": [
+				"&7Click to view statistics!/n/n&a[Left click to public]/n&c[Right click to private]"
+			]
+		},
+		"status-icon": {
+			"material": "nether_star",
+			"data-value": 0,
+			"display-name": "&c&lPlayer Status",
+			"lore": [
+				"&7%o (%s)"
+			]
+		},
+		"friends-list": {
+			"material": "compass",
+			"data-value": 0,
+			"display-name": "&c&lFriends List &7(%status)", // %status must have a placeholder
+			"lore": [
+				"&7Click to view friends list!/n/n&a[Left click to public]/n&c[Right click to private]"
+			]
+		},
+		"own-profile": {
+			"material": "barrier",
+			"data-value": 0,
+			"display-name": "&c&lUnavailable",
+			"lore": [
+				"&7Action invalid on your own profile!"
+			]
+		}
+	},
+
+	"profiles-others": {
+		"title": "&8Arkham â— %n's Profile",
+		"placeholder-one": 15,
+		"placeholder-two": 7,
+		"player-head": {
+			"material": "skull", // Must be the head of player on the profile
+			"data-value": 3,
+			"display-name": "&a&l%dn (%n)", // Even necessary? Line 14 already has this
+			"lore": [
+				"" // Nothing should be shown here
+			]
+		},
+		"edit-gender": {
+			"material": "book",
+			"data-value": 0,
+			"display-name": "&e&lGender",
+			"lore": [
+				"&7%gender" // %gender must have a placeholder
+			]
+		},
+		"edit-country": {
+			"material": "book",
+			"data-value": 0,
+			"display-name": "&e&lCountry",
+			"lore": [
+				"&7%country"  // %country must have a placeholder
+			]
+		},
+		"server-rank": {
+			"material": "book",
+			"data-value": 0,
+			"display-name": "&e&lServer Rank",
+			"lore": [
+				"&7%rank"  // %rank must have a placeholder
+			]
+		},
+		"join-date": {
+			"material": "book",
+			"data-value": 0,
+			"display-name": "&e&lJoin Date",
+			"lore": [
+				"&7%joindate"  // %joindate must have a placeholder
+			]
+		},
+		"edit-discord": {
+			"material": "book",
+			"data-value": 0,
+			"display-name": "&e&lDiscord Username",
+			"lore": [
+				"&7%discord"  // %discord must have a placeholder
+			]
+		},
+		"statistics-icon": {
+			"material": "watch",
+			"data-value": 0,
+			"display-name": "&e&lStatistics &7(%status)", // %status must have a placeholder
+			"lore": [
+				"&7Click to view statistics!"
+			],
+			"lore-error": [ // Error shown when player's statistics are private
+				"&7This player has their statistics private!"
+			]
+		},
+		"status-icon": {
+			"material": "nether_star",
+			"data-value": 0,
+			"display-name": "&c&lPlayer Status",
+			"lore": [
+				"&7%o (%s)/n/n"
+			]
+		},
+		"friends-list": {
+			"material": "compass",
+			"data-value": 0,
+			"display-name": "&c&lFriends List &7(%status)", // %status must have a placeholder
+			"lore": [
+				"&7Click to view friends list!"
+			],
+			"lore-error": [ // Error shown when player's friends list is private
+				"&7This player has their friends list private!"
+			]
+		},
+		"send-message": {
+			"material": "name_tag",
+			"data-value": 0,
+			"display-name": "&e&lSend Message",
+			"lore": [
+				"&7Click to send this player a message!"
+			],
+			"lore-offline": [ // Error shown when player is offline
+				"&7This player is offline!"
+			]
+		},
+		"send-tp": {
+			"material": "compass",
+			"data-value": 0,
+			"display-name": "&b&lSend TP Request",
+			"lore": [
+				"&7Click to send this player a TP request!"
+			],
+			"lore-offline": [ // Error shown when player is offline
+				"&7This player is offline!"
+			],
+			"lore-notsame": [ // Error shown when player is not on the same server
+				"&7This player is on a different server!"
+			]
+		},
+		"add-to-friends": {
+			"material": "slime_ball",
+			"data-value": 0,
+			"display-name": "&a&lAdd to Friends",
+			"lore": [
+				"&7Click to add to friends!"
+			],
+			"lore-friends": [ // Error shown if player is already a friend!
+				"&7You are already friends with this player!"
+			]
+		},
+		"add-to-guild": {
+			"material": "gold_helmet",
+			"data-value": 0,
+			"display-name": "&e&lAdd to Guild",
+			"lore": [
+				"&7Click to add to one of your guilds!"
+			],
+			"window-name": "window" // What is this?
+		},
+		"gift-item": {
+			"material": "item_frame",
+			"data-value": 0,
+			"display-name": "&c&lGift Item",
+			"lore": [
+				"&7Click to gift this player an item!"
+			],
+			"lore-offline": [ // Error shown when player is offline
+				"&7This player is offline!"
+			]
+		}
+	},
+
+	"other-profile": {
+		"title": "&8Arkham â— %n's Profile",
+		"placeholder-one": 15,
+		"placeholder-two": 7,
+		"player-head": {
+			"material": "skull", // Must be head of yourself
+			"data-value": 3,
+			"display-name": "&a&l%dn (%n)",
+			"lore": [
+				"" // Nothing should be shown here
+			]
+		},
+		"edit-first-name": {
+			"material": "name_tag",
+			"data-value": 0,
+			"display-name": "&a&lFirst Name",
+			"lore": [
+				"&7%n/n/n&a[Left click to edit]/n&c[Right click to remove]"
+			]
+		},
+		"edit-bio": {
+			"material": "book",
+			"data-value": 0,
+			"display-name": "&c&lBio",
+			"lore": [
+				"&7%bio/n/n&a[Left click to edit]/n&c[Right click to remove]" // %bio must have a placeholder
+			]
+		},
+		"forum-sync": {
+			"material": "book",
+			"data-value": 0,
+			"display-name": "&a&lForums",
+			"lore-notsynced": [ // Lore shown when forusm account is not synced
+				"&7Not synced/n/n&a[Left click to add]"
+			],
+			"lore-synced": [ // Lore shown when forums account is synced
+				"&7Synced/n/n&c[Right click to remove]"
+			]
+		}
+	},
+	"stats": {
+		"title": "&8Arkham â— %n's Stats",
+		"placeholder-one": 15,
+		"placeholder-two": 7,
+		"global-stats": {
+			"material": "skull", // Must be head of player viewing stats for
+			"data-value": 0,
+			"display-name": "&a&l%dn (%n)",
+			"lore": [
+				"&7Click to view stats for all servers!"
+			]
+		},
+		"server-skyblock": { // Added entry
+			"material": "sapling",
+			"data-value": 0,
+			"display-name": "&a&lSkyblock Server",
+			"lore": [
+				"&7Click to view stats for Skyblock!"
+			]
+		},
+		"server-prison": { // Added entry
+			"material": "iron_fence",
+			"data-value": 0,
+			"display-name": "&c&lPrison Server",
+			"lore": [
+				"&7Click to view stats for Prison!"
+			]
+		},
+		"server-creative": { // Added entry
+			"material": "brick_stairs",
+			"data-value": 0,
+			"display-name": "&e&lCreative Server",
+			"lore": [
+				"&7Click to view stats for Creative!"
+			]
+		},
+		"server-factions": { // Added entry
+			"material": "tnt",
+			"data-value": 0,
+			"display-name": "&a&lFactions Server",
+			"lore": [
+				"&7Click to view stats for Factions!"
+			]
+		},
+		"server-survival": { // Added entry
+			"material": "gold_block",
+			"data-value": 0,
+			"display-name": "&b&lSurvival Server",
+			"lore": [
+				"&7Click to view stats for Survival!"
+			]
+		},
+		"server-kitpvp": { // Added entry
+			"material": "diamond_sword",
+			"data-value": 0,
+			"display-name": "&c&lKitPvP Server",
+			"lore": [
+				"&7Click to view stats for KitPvP!"
+			]
+		}
+	},	
+	"preferences": {
+		"title": "&8Arkham â— %n's Preferences",
+		"placeholder-one": 15,
+		"placeholder-two": 7,
+		"preferences": {
+			"material": "skull", // Must be head of yourself
+			"data-value": 0,
+			"display-name": "&a&l%dn (%n)",
+			"lore": [
+				"&7Your Server Preferences"
+			]
+		},	
+		"payments": { // True-false messages have been moved to the bottom
+			"default": true,
+			"enabled-material": "ink_sack", // Item shown if setting is enabled
+			"enabled-data-value": 10, // Item shown if setting is enabled
+			"disabled-material": "ink_sack", // Item shown if setting is disabled
+			"disabled-data-value": 8, // Item shown if setting is disabled
+			"display-name": "&c&lPayment Requests",
+			"lore": [
+				"&7Status: %paymentrequestsstatus/n/n&a[Click to enable]/n&c[Click to disable]"
+			]
+		},
+		"tp-requests": { // True-false messages have been moved to the bottom
+			"default": true,
+			"enabled-material": "ink_sack", // Item shown if setting is enabled
+			"enabled-data-value": 10, // Item shown if setting is enabled
+			"disabled-material": "ink_sack", // Item shown if setting is disabled
+			"disabled-data-value": 8, // Item shown if setting is disabled
+			"display-name": "&c&lTP Requests",
+			"lore": [
+				"&7Status: %tprequeststatus/n/n&a[Click to enable]/n&c[Click to disable]"
+			]
+		}, 
+		"friend-requests": { // True-false messages have been moved to the bottom
+			"default": true,
+			"enabled-material": "ink_sack", // Item shown if setting is enabled
+			"enabled-data-value": 10, // Item shown if setting is enabled
+			"disabled-material": "ink_sack", // Item shown if setting is disabled
+			"disabled-data-value": 8, // Item shown if setting is disabled
+			"display-name": "&c&lFriend Requests",
+			"lore": [
+				"&7Status: %friendrequeststatus/n/n&a[Click to enable]/n&c[Click to disable]"
+			]
+		},
+		"guild-requests": { // True-false messages have been moved to the bottom
+			"default": true,
+			"enabled-material": "ink_sack", // Item shown if setting is enabled
+			"enabled-data-value": 10, // Item shown if setting is enabled
+			"disabled-material": "ink_sack", // Item shown if setting is disabled
+			"disabled-data-value": 8, // Item shown if setting is disabled
+			"display-name": "&c&lGuild Requests",
+			"lore": [
+				"&7Status: %guildrequeststatus/n/n&a[Click to enable]/n&c[Click to disable]"
+			]
+		},
+		"messages": { // True-false messages have been moved to the bottom
+			"default": true,
+			"enabled-material": "ink_sack", // Item shown if setting is enabled
+			"enabled-data-value": 10, // Item shown if setting is enabled
+			"disabled-material": "ink_sack", // Item shown if setting is disabled
+			"disabled-data-value": 8, // Item shown if setting is disabled
+			"display-name": "&c&lMessages",
+			"lore": [
+				"&7Status: %messagestatus/n/n&a[Click to enable]/n&c[Click to disable]"
+			]
+		},
+		"mentions": { // True-false messages have been moved to the bottom
+			"default": true,
+			"enabled-material": "ink_sack", // Item shown if setting is enabled
+			"enabled-data-value": 10, // Item shown if setting is enabled
+			"disabled-material": "ink_sack", // Item shown if setting is disabled
+			"disabled-data-value": 8, // Item shown if setting is disabled
+			"display-name": "&c&lChat Mentions",
+			"lore": [
+				"&7Status: %mentionstatus/n/n&a[Click to enable]/n&c[Click to disable]"
+			]
+		},
+		"hub": { // True-false messages have been moved to the bottom
+			"default": true,
+			"enabled-material": "ink_sack", // Item shown if setting is enabled
+			"enabled-data-value": 10, // Item shown if setting is enabled
+			"disabled-material": "ink_sack", // Item shown if setting is disabled
+			"disabled-data-value": 8, // Item shown if setting is disabled
+			"display-name": "&c&lHub Joining",
+			"lore": [
+				"&7Status: %hubstatus/n/n&a[Click to enable]/n&c[Click to disable]"
+			]
+		},
+		"private": { // True-false messages have been moved to the bottom
+			"default": false,
+			"enabled-material": "ink_sack", // Item shown if setting is enabled
+			"enabled-data-value": 10, // Item shown if setting is enabled
+			"disabled-material": "ink_sack", // Item shown if setting is disabled
+			"disabled-data-value": 8, // Item shown if setting is disabled
+			"display-name": "&c&lProfile Privacy",
+			"lore": [
+				"&7Status: %privatestatus/n/n&a[Click to enable]/n&c[Click to disable]"
+			]
+		}
+	},
+	"ignored-players": {
+		"title": "&8Arkham â— %n's Preferences",
+		"placeholder-one": 15,
+		"placeholder-two": 7,
+		"player": {
+			"material": "skull", // Must be head of yourself
+			"data-value": 0,
+			"display-name": "&a&l%dn (%n)",
+			"lore": [
+				"&7Igored players: %ignoredamount!" // %ignoredamount must have a placeholder
+			]
+		},
+		"add-player": {
+			"material": "emerald",
+			"data-value": 0,
+			"display-name": "&a&lAdd Player",
+			"lore": [
+				"&7Click to add a player to your ignored list!"
+			]
+		},
+		"list-player": {
+			"material": "book",
+			"data-value": 0,
+			"display-name": "&e&lList Players",
+			"lore": [
+				"&7Click to list your ignored players!"
+			]
+		}
+	},
+	"list-players": {
+		"title": "&8Arkham â— %n's Preferences",
+		"placeholder-one": 15,
+		"placeholder-two": 7,
+		"entry": {
+			"material": "playerhead", // Must be head of ignored player
+			"data-value": 0,
+			"display-name": "&a&l%n",
+			"lore": [
+				"&aIgnored For: &7%ignoredtime/n/n&c[Right click to remove]" // %ignoredtime must have a placeholder
+			]
+		},
+		"next-page": {
+			"available-material": "ink_sack", // Item shown if there is a next page
+			"available-data-value": 10, // Item shown if there is a next page
+			"unavailable-material": "ink_sack", // Item shown if there is not a next page
+			"unavailable-data-value": 8, // Item shown if there is not a next page
+			"display-name": "&a&lNext Page",
+			"lore": [
+				"&7Click to go to the next page!"
+			]
+		},
+		"previous-page": {
+			"available-material": "ink_sack", // Item shown if there is a previous page
+			"available-data-value": 10, // Item shown if there is a previous page
+			"unavailable-material": "ink_sack", // Item shown if there is not a previous page
+			"unavailable-data-value": 8, // Item shown if there is not a previous page
+			"display-name": "&c&lPrevious Page",
+			"lore": [
+				"&7Click to go to the previous page!"
+			]
+		}
+	},
+	"friends-menu": {
+		"title": "&8Arkham â— %n's Friends",
+		"placeholder-one": 15,
+		"placeholder-two": 7,
+		"player": {
+			"material": "skull", // Must be head of yourself
+			"data-value": 0,
+			"display-name": "&a&l%dn (%n)",
+			"lore": [
+				"&7Friends: %friendsamount" // %friensamount must have a placeholder
+			]
+		},
+		"add-friend": {
+			"material": "emerald",
+			"data-value": 0,
+			"display-name": "&a&lAdd Friend",
+			"lore": [
+				"Click to add a friend!"
+			]
+		},
+		"friend-requests": {
+			"material": "book_and_quill",
+			"data-value": 0,
+			"display-name": "&e&lFriend Requests &7(%openrequests open)", // %openrequests must have a placeholder
+			"lore": [
+				"&7Click to view friend requests!"
+			]
+		},
+		"list-favorites": {
+			"material": "golden_apple",
+			"data-value": 0,
+			"display-name": "&c&lList Favorites",
+			"lore": [
+				"&7lick to view favorite friends!"
+			]
+		},
+		"list-friends": {
+			"material": "paper",
+			"data-value": 0,
+			"display-name": "&e&lList Friends",
+			"lore": [
+				"&7Click to view your friends list!"
+			]
+		}
+	},
+	"friends-requests": {
+		"title": "&8Arkham â— %n's Friend Requests",
+		"placeholder-one": 15,
+		"placeholder-two": 7,
+		"entry": {
+			"material": "skull", // Must be head of player the request came from
+			"data-value": 0,
+			"display-name": "&a&l%n &7(Unanswered)",
+			"lore": [
+				"&7This player wants to be friends/n&7with you and has sent a request!/n/n&a[Left click to accept]&e[Middle click to view profile]&c[Right click to decline]"
+			]
+		},
+		"next-page": {
+			"available-material": "ink_sack", // Item shown if there is a next page
+			"available-data-value": 10, // Item shown if there is a next page
+			"unavailable-material": "ink_sack", // Item shown if there is not a next page
+			"unavailable-data-value": 8, // Item shown if there is not a next page
+			"display-name": "&a&lNext Page",
+			"lore": [
+				"&7Click to go to the next page!"
+			]
+		},
+		"previous-page": {
+			"available-material": "ink_sack", // Item shown if there is a previous page
+			"available-data-value": 10, // Item shown if there is a previous page
+			"unavailable-material": "ink_sack", // Item shown if there is not a previous page
+			"unavailable-data-value": 8, // Item shown if there is not a previous page
+			"display-name": "&c&lPrevious Page",
+			"lore": [
+				"&7Click to go to the previous page!"
+			]
+		}
+	},
+	"list-favorites": {
+		"title": "&8Arkham â— %n's Favorites",
+		"placeholder-one": 15,
+		"placeholder-two": 7,
+		"entry": {
+			"material": "skull", // Must be head of player who is a favorite
+			"data-value": 0,
+			"display-name": "&a&l%n",
+			"lore": [
+				"&a-Status: &7%o (%timeonline)/n&a- Server: &7%s/n&a- Friends Since: &7%friendstime/n/n&a[Left click to remove favorite]&e[Middle click to view profile]&c[Right click for more options]" // %timeonline and %friendstieme must have a placeholder
+			]
+		},
+		"next-page": {
+			"available-material": "ink_sack", // Item shown if there is a next page
+			"available-data-value": 10, // Item shown if there is a next page
+			"unavailable-material": "ink_sack", // Item shown if there is not a next page
+			"unavailable-data-value": 8, // Item shown if there is not a next page
+			"display-name": "&a&lNext Page",
+			"lore": [
+				"&7Click to go to the next page!"
+			]
+		},
+		"previous-page": {
+			"available-material": "ink_sack", // Item shown if there is a previous page
+			"available-data-value": 10, // Item shown if there is a previous page
+			"unavailable-material": "ink_sack", // Item shown if there is not a previous page
+			"unavailable-data-value": 8, // Item shown if there is not a previous page
+			"display-name": "&c&lPrevious Page",
+			"lore": [
+				"&7Click to go to the previous page!"
+			]
+		},
+		"sort": {
+			"material": "watch",
+			"data-value": 0,
+			"display-name": "&e&lSorting Options",
+			"lore": [
+				"&7- Sort by A-Z/n&7- Sort by Z-A/n&7- Sort by Online/n&7- Sort by Offline/n&7- Sort by Accepted/n&7- Sort by Pending/n/n&a[Left click for next mode]/n&c[Right click for previous mode]" // Currently selected sorting mode MUST be highlighted with &f color
+			]
+		}
+	},
+	"list-friends": {
+		"title": "&8Arkham â— %n's Friends",
+		"placeholder-one": 15,
+		"placeholder-two": 7,
+		"entry": {
+			"material": "skull", // Must be head of player who is a friend
+			"data-value": 0,
+			"display-name": "&a&l%n",
+			"lore": [
+				"&a-Status: &7%o (%timeonline)/n&a- Server: &7%s/n&a- Friends Since: &7%friendstime/n/n&a[Left click to set favorite]&e[Middle click to view profile]&c[Right click for more options]" // %timeonline and %friendstieme must have a placeholder
+			]
+		},
+		"next-page": {
+			"available-material": "ink_sack", // Item shown if there is a next page
+			"available-data-value": 10, // Item shown if there is a next page
+			"unavailable-material": "ink_sack", // Item shown if there is not a next page
+			"unavailable-data-value": 8, // Item shown if there is not a next page
+			"display-name": "&a&lNext Page",
+			"lore": [
+				"&7Click to go to the next page!"
+			]
+		},
+		"previous-page": {
+			"available-material": "ink_sack", // Item shown if there is a previous page
+			"available-data-value": 10, // Item shown if there is a previous page
+			"unavailable-material": "ink_sack", // Item shown if there is not a previous page
+			"unavailable-data-value": 8, // Item shown if there is not a previous page
+			"display-name": "&c&lPrevious Page",
+			"lore": [
+				"&7Click to go to the previous page!"
+			]
+		},
+		"sort": {
+			"material": "watch",
+			"data-value": 0,
+			"display-name": "&e&lSorting Options",
+			"lore": [
+				"&7- Sort by A-Z/n&7- Sort by Z-A/n&7- Sort by Online/n&7- Sort by Offline/n&7- Sort by Accepted/n&7- Sort by Pending/n/n&a[Left click for next mode]/n&c[Right click for previous mode]" // Currently selected sorting mode MUST be highlighted with &f color
+			]
+		}
+	},
+	"list-friends-other": {
+		"title": "&8Arkham â— %n's Friends",
+		"placeholder-one": 15,
+		"placeholder-two": 7,
+		"profile": {
+			"material": "skull", // Must be head of player who is a friend
+			"data-value": 0,
+			"display-name": "&a&lGo to profile",
+			"lore": [
+				"&7Click to go to this player's profile!"
+			]
+		},
+		"add-remove-favorite": {
+			"material": "nether_star",
+			"data-value": 0,
+			"display-name-add": "&a&lAdd as favorite", // Shown if player is not yet a favorite
+			"display-name-remove": "&a&lRemove as favorite", // Shown if player is already a favorite
+			"lore-add": [ // Shown if player is not yet a favorite
+				"&7Click to add this player as a favorite!"
+			],
+			"lore-remove": [ // Shown if player is already a favorite
+				"&7Click to remove this player as a favorite!"
+			]
+		},
+		"message-player": {
+			"material": "paper",
+			"data-value": 0,
+			"display-name": "&e&lMessage Player",
+			"lore": [
+				"&7Click to message this player"
+			],
+			"lore-offline": [ // Error shown when player is offline
+				"&7This player is offline!"
+			]
+		},
+		"server-teleporter": {
+			"material": "compass",
+			"data-value": 0,
+			"display-name": "&c&lServer Teleporter",
+			"lore": [
+				"&7Click to teleport to this player's server"
+			],
+			"lore-offline": [ // Error shown when player is offline
+				"&7This player is offline!"
+			],
+			"lore-notsame": [ // Error shown when player is not on the same server
+				"&7This player is on a different server!"
+			]
+		},
+		"gift-item": {
+			"material": "item_frame",
+			"data-value": 0,
+			"display-name": "&b&lGift Item",
+			"lore": [
+				"&7Click to gift this player an item!"
+			],
+			"lore-offline": [ // Error shown when player is offline
+				"&7This player is offline!"
+			]
+		},
+		"remove-friend": { // You forgot about this one ;)
+			"material": "barrier",
+			"data-value": 0,
+			"display-name": "&c&lRemove Friend",
+			"lore": [
+				"&7Click to remove this friend!"
+			]
+		}
+	},
+	"confirmation-screen": { // Added, shown when trying to remove a friend (https://files.connected.sh/i0dcqnp3wm.png)
+		"title": "&8Arkham â— %n's Friends",
+		"placeholder-one": 15,
+		"placeholder-two": 7,
+		"are-you-sure": {
+			"material": "skull", // Must be the head of MHF_Question
+			"data-value": 0,
+			"display-name": "&c&lAre you sure?",
+			"lore": [
+				"&7Are you sure you want to remove/n&7this player as a friend?/n/n&7This action cannot be reversed!"
+			]
+		},
+		"confirm": {
+			"material": "ink_sack",
+			"data-value": 10,
+			"display-name": "&a&lConfirm",
+			"lore": [
+				"&7Click to confirm!"
+			]
+		},
+		"cancel": {
+			"material": "ink_sack",
+			"data-value": 1,
+			"display-name": "&c&lCancel",
+			"lore": [
+				"&7Click to cancel!" 
+			]
+		}
+	},
+	"messages": {
+
+		"target-not-online": "&cThat player is not currently online!", // This can be removed now that "offline" status shows directly on the lore
+
+		"changed-firstname": "&8[&cArkham&8] &7You have changed your first name to &c%nv!", // Added
+		"changed-bio": "&8[&cArkham&8] &7Bio changed successfully",
+		"changed-gender": "&8[&cArkham&8] &7You have changed your gender to &c%nv!",
+		"changed-country": "&8[&cArkham&8] &7You have changed your country to &c%nv!",
+		"changed-discord": "&&8[&cArkham&8] &7You have changed your Discord name to &c%nv!",
+		
+		"forums-sync": "&8[&cArkham&8] &7Click here to link your forums account!", // Added
+		"forums-sync-tooltip": "&aClick to sync!", // Added, tooptip hover message
+
+		"settings-payments-on": "&8[&cArkham&8] &7You have toggled payments &con!", // Added
+		"settings-payments-off": "&8[&cArkham&8] &7You have toggled payments &coff!", // Added
+		"settings-tprequests-on": "&8[&cArkham&8] &7You have toggled TP requests &con!", // Added
+		"settings-tprequests-off": "&8[&cArkham&8] &7You have toggled TP requests &coff!", // Added
+		"settings-friendrequests-on": "&8[&cArkham&8] &7You have toggled friend requests &con!", // Added
+		"settings-friendrequests-off": "&8[&cArkham&8] &7You have toggled friend requests &coff!", // Added
+		"settings-guildrequests-on": "&8[&cArkham&8] &7You have toggled guild requests &con!", // Added
+		"settings-guildrequests-off": "&8[&cArkham&8] &7You have toggled guild requests &coff!", // Added
+		"settings-messages-on": "&8[&cArkham&8] &7You have toggled messaging &con!", // Added
+		"settings-messages-off": "&8[&cArkham&8] &7You have toggled messaging &coff!", // Added
+		"settings-hub-on": "&8[&cArkham&8] &7You have toggled hub joining &con!", // Added
+		"settings-hub-off": "&8[&cArkham&8] &7You have toggled hub joining &coff!", // Added
+		"settings-private-on": "&8[&cArkham&8] &7You have toggled your profile &con!", // Added
+		"settings-private-off": "&8[&cArkham&8] &7You have toggled your profile &coff!", // Added
+
+		"ignore-added": "&8[&cArkham&8] &7You are now ignoring &c%o!", // property changed from "added-ignore"
+		"ignore-removed": "&8[&cArkham&8] &7You are no longer ignoring &c%o!", // property changed from "removed-ignore"
+		"ignore-error": "&8[&cArkham&8] &7You cannot interact with that player!", // property changed from "added-ignore-message"
+
+		"friend-added-sender": "&8[&cArkham&8] &7You have sent &c%o &7a friend request!", // property changed from "added-friend"
+		"friend-message-recipient": "&8[&cArkham&8] &c%n &7has sent you a friend request! Click to accept.", // property changed from "added-friend-message"
+		"friend-message-recipient-hover": "&aClick to accept!", // Added, tooptip hover message
+		"friend-request-accepted-sender": "&8[&cArkham&8] &7You have accepted &c%n's &7friend request!", // Added
+		"friend-request-denied-sender": "&8[&cArkham&8] &7You have denied &c%n's &7friend request!", // Added
+		"friend-request-accepted-recipient": "&8[&cArkham&8] &c%o &7has accepted your friend request!", // Added
+		"friend-request-denied-recipient": "&8[&cArkham&8] &c%o &7has denied your friend request!", // Added
+		"friend-favorite-added": "&8[&cArkham&8] &7You have added &c%o &7as your favorite!", // Added
+		"friend-favorite-removed": "&8[&cArkham&8] &7You have removed &c%o &7as your favorite!", // Added
+		"friend-remove-sender": "&8[&cArkham&8] &7You have removed &c%o &7as your friend!", // property changed from "removed-friend"
+		"friend-remove-recipient": "&8[&cArkham&8] &c%n &7has removed you as a friend!", // Added
+
+		"subtitle-player-not-found": "&cThat player could not be found!", // Added, displayed when adding or searching for a friend/ignore and player does not exist
+		
+		"added-ignore-error": "Custom error messages shown once adding player is denied", // replaced by "subtitle-player-not-found" ??
+		"removed-ignore-error": "Custom error messages shown once adding player is denied", // replaced by "subtitle-player-not-found" ??
+		"added-friend-error": "Custom error messages shown once adding player is denied", // replaced by "subtitle-player-not-found" ??
+		"removed-friend-error": "Custom error messages shown once adding player is denied", // replaced by "subtitle-player-not-found" ??
+		"player-search-error": "Custom error messages shown once adding player is denied", // replaced by "subtitle-player-not-found" ??
+		
+		"sign-add-ignore": "&8Enter name above", // property changed from "added-ignore-sign"
+		"sign-add-friend": "&8Enter name above", // property changed from "added-friend-sign"
+		"sign-search-player": "&8Enter name above" // property changed from "player-search-sign"
+	},
+	"defaults": {
+		"gender-name": "human",
+		"discord-name": "Not Given Yet", // Default name
+		"country-name": "Nowhere, Earth", // Default country name
+		"first-name": "Not Set!",
+		"default-bio": [
+			"Hi, I not made a bio",
+			"for my profile yet!"
+		]
+	}
+	// Allegiance has color optionals built into it's config node. Just put them there. Same with friend status and player status 
+}

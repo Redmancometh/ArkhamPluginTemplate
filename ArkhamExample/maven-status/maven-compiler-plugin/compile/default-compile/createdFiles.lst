@@ -1,0 +1,6 @@
+org\arkhamnetwork\example\ArkhamExample.class
+org\arkhamnetwork\example\config\MessagesConfig.class
+org\arkhamnetwork\example\config\ExampleConfig.class
+org\arkhamnetwork\example\commands\ExampleReloadCommand.class
+org\arkhamnetwork\example\objects\ExampleObject.class
+org\arkhamnetwork\example\ExampleManager.class

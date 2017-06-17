@@ -1,0 +1,4 @@
+name: ArkhamExample
+main: org.arkhamnetwork.example.ArkhamExample
+version: 1.0
+depend: [RedCore]
